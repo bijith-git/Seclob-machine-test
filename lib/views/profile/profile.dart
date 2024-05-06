@@ -203,7 +203,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(
                             // width: MediaQuery.of(context).size.width,
                             height: min(220, size.height * .3) *
-                                (profileProvider.posts.length / 3),
+                                (profileProvider.posts.length / 3.0)
+                                    .ceil()
+                                    .toDouble(),
                             child: TabBarView(
                               children: [
                                 Padding(

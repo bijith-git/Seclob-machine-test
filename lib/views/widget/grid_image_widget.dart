@@ -22,43 +22,53 @@ class GridImageWIdget extends StatelessWidget {
           image: DecorationImage(
               fit: BoxFit.cover,
               image: CachedNetworkImageProvider(post.filePath))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Stack(
         children: [
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    post.likeCount.toString(),
-                    style: textTheme.bodyLarge!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  )
-                ],
-              )),
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.chat_bubble_outline,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    post.commentCount.toString(),
-                    style: textTheme.bodyLarge!.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  )
-                ],
-              )),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.favorite_outline, color: Colors.white),
+                    Text(
+                      post.likeCount.toString(),
+                      style: textTheme.bodyLarge!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.chat_bubble_outline, color: Colors.white),
+                    Text(
+                      post.commentCount.toString(),
+                      style: textTheme.bodyLarge!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
