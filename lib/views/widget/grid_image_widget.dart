@@ -48,8 +48,8 @@ class GridImageWIdget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    Icons.comment_outlined,
+                  const Icon(
+                    Icons.chat_bubble_outline,
                     color: Colors.white,
                   ),
                   Text(
