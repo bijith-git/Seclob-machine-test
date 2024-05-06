@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ProfileProvider(),
       child: MaterialApp(
         title: 'Machine test',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
