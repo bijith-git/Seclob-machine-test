@@ -1,11 +1,11 @@
-import 'dart:ui';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:machine_test/models/profile_model.dart';
-import 'package:machine_test/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'package:machine_test/provider/profile_provider.dart';
 
 import '../../constants/colors.dart';
 import '../widget/widget.dart';
@@ -21,15 +21,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   var userData = {};
-  int postLen = 0;
-  int followers = 0;
-  int following = 0;
-  String img =
-      'https://rubidya.s3.ap-south-1.amazonaws.com/images/1714998401044-GfYn5fNupz.png';
-  @override
-  void initState() {
-    super.initState();
-  }
+
+  int followers = 564;
+  int following = 564;
+  final String imageUrl =
+      'https://s3-alpha-sig.figma.com/img/d65f/a2e5/e3d238402bc77eff08983fb70b4ae1a4?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=F8fAJqx6l~5y6zTIMqRyQlEW24ZhfJOI7LD4HeJzXF4zFCNAnj84-LWhyluPQe5edSUtiOLwtGH9Ac8LlO9~Z4gvecjspRAerObKlCq0JbGRFvK0KMM7WB~3jIqlAHYb-PBqrUly8YP9gN~gcKTxgxVAnHaFuN1QqnsEX7qjaN9dRHDzbDGM1sTugjTxvj7hLkPizsXaTOFQNzJo1guQiRYNvsROekZEuRy6eD9Jn-GW0bXmi9l2TB-DFAkqbTCQzBAMtUdpviVKFdkhJR9wOdtRPjaon~dS1CsTdKU86BZzh75z9TQOisX~eF4z8peLBtyhwEregNFZPsjlj2TpkQ__';
 
   @override
   Widget build(BuildContext context) {
@@ -45,30 +41,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               scrolledUnderElevation: 0,
-              leading: Container(
-                alignment: Alignment.center,
+              leading: AppBarIcon(
+                icon: Icons.ios_share_rounded,
                 margin: const EdgeInsets.only(left: 15),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: blueColor.withOpacity(.4),
-                ),
-                child: const Icon(
-                  Icons.ios_share_rounded,
-                ),
               ),
               actions: [
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(right: 15),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: blueColor.withOpacity(.4),
-                  ),
-                  child: const Icon(
-                    Icons.more_horiz,
-                  ),
+                AppBarIcon(
+                  icon: Icons.more_horiz,
                 )
               ],
             ),
@@ -110,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     CircleAvatar(
                                       backgroundColor: Colors.grey,
                                       backgroundImage:
-                                          CachedNetworkImageProvider(img),
+                                          CachedNetworkImageProvider(imageUrl),
                                       radius: 40,
                                     ),
                                     Expanded(
@@ -121,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           buildStatColumn(
-                                              profileProvider.posts.length,
+                                              profileProvider.postCount,
                                               "posts"),
                                           buildStatColumn(
                                               followers, "followers"),
@@ -139,6 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   child: Text("Rayan Moon",
                                       style: textTheme.bodyLarge!.copyWith(
+                                          color: blueTextColor,
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 Container(
@@ -147,7 +127,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     top: 8,
                                   ),
                                   child: Text("Photographer",
-                                      style: textTheme.bodyMedium),
+                                      style: textTheme.bodyMedium!.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: blueTextColor.withOpacity(.7),
+                                      )),
                                 ),
                                 Container(
                                   alignment: Alignment.centerLeft,
@@ -158,8 +141,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     maxLines: 4,
                                     textAlign: TextAlign.left,
                                     overflow: TextOverflow.ellipsis,
-                                    style: textTheme.bodyMedium!.copyWith(
-                                        letterSpacing: 1, height: 1.6),
+                                    style: textTheme.bodyLarge!.copyWith(
+                                        color: blueTextColor,
+                                        letterSpacing: 1,
+                                        height: 1.6),
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -167,36 +152,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: blueColor,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 36),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(16))),
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Edit Profile",
-                                          style: textTheme.bodyLarge!.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: blueDarkColor,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 36),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(16))),
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Wallet",
-                                          style: textTheme.bodyLarge!.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        )),
+                                    ButtonWidget(
+                                      backgroundColor: blueColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 36),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
+                                      buttonTitle: "Edit Profile",
+                                    ),
+                                    const ButtonWidget(buttonTitle: "Wallet"),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor:
@@ -226,7 +191,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   letterSpacing: 1),
                               unselectedLabelStyle: textTheme.bodyMedium!
                                   .copyWith(letterSpacing: 1),
-                              // insets: EdgeInsets.zero,
                               dividerColor: Colors.grey,
                               tabs: const [
                                 Tab(
@@ -238,7 +202,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ]),
                           SizedBox(
                             // width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 2,
+                            height: min(220, size.height * .3) *
+                                (profileProvider.posts.length / 3),
                             child: TabBarView(
                               children: [
                                 Padding(
@@ -263,7 +228,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   ),
                                 ),
-                                const Text("Video")
+                                Center(
+                                    child: Text(
+                                  "Video",
+                                  style: textTheme.bodyLarge,
+                                ))
                               ],
                             ),
                           )
@@ -275,6 +244,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Container AppBarIcon(
+      {required IconData icon,
+      EdgeInsetsGeometry? margin = const EdgeInsets.only(right: 15)}) {
+    return Container(
+      alignment: Alignment.center,
+      margin: margin,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: blueColor.withOpacity(.2),
+      ),
+      child: Icon(
+        icon,
+        color: blueDarkColor,
+      ),
+    );
+  }
+
   Column buildStatColumn(int num, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -282,20 +269,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           num.toString(),
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              fontSize: 21, fontWeight: FontWeight.bold, color: blueDarkColor),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4),
           child: Text(
             label,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: blueDarkColor.withOpacity(.7)),
           ),
         ),
       ],

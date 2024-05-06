@@ -4,18 +4,10 @@ import '../views/views.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
     switch (settings.name) {
-      case '/profile':
-        if (args is String) {
-          return MaterialPageRoute(
-            builder: (_) => ProfileScreen(),
-          );
-        }
+      case '/':
         return MaterialPageRoute(
-          builder: (_) =>
-              const ErrorScreen(errorMessage: 'Invalid arguments for profile'),
+          builder: (_) => const ProfileScreen(),
         );
 
       default:

@@ -12,6 +12,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   List<Media> posts = [];
+  int postCount = 0;
 
   final _apiClient = Api();
   String _errorMessage = '';
@@ -25,14 +26,17 @@ class ProfileProvider extends ChangeNotifier {
     try {
       _state = AppState.loading;
       notifyListeners();
+      var token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjBiZmUxODE3ZmYzZjBkMmZjMmQwNGUiLCJpYXQiOjE3MTQ3MTkyMDMsImV4cCI6MTc4MzgzOTIwM30.HfsYDcVEzMsdi6pU24IzHzmGAxfDQ2NAJYIptOAu_9I";
       var url = ApiConfig.baseUrl + ApiEndPoint.getMedia;
       final response = await _apiClient.client<dynamic>(
-        RequestOptions(method: 'GET', path: url, headers: {
-          "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjBiZmUxODE3ZmYzZjBkMmZjMmQwNGUiLCJpYXQiOjE3MTQ3MTkyMDMsImV4cCI6MTc4MzgzOTIwM30.HfsYDcVEzMsdi6pU24IzHzmGAxfDQ2NAJYIptOAu_9I"
-        }),
+        RequestOptions(
+            method: 'GET',
+            path: url,
+            headers: {"Authorization": "Bearer $token"}),
       );
       response.data['media'].map((e) => posts.add(Media.fromJson(e))).toList();
+      postCount = response.data['postCount'] ?? 0;
       _state = AppState.complete;
     } catch (error) {
       _errorMessage = error.toString();

@@ -11,6 +11,13 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Error",
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
